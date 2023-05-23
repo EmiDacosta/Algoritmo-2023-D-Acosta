@@ -1,0 +1,97 @@
+class Movie:
+    def __init__(self, title, studio, release_year):
+        self.title = title
+        self.studio = studio
+        self.release_year = release_year
+
+
+class MovieStack:
+    def __init__(self):
+        self.stack = []
+
+    def is_empty(self):
+        return len(self.stack) == 0
+
+    def push(self, movie):
+        self.stack.append(movie)
+
+    def pop(self):
+        if self.is_empty():
+            return None
+        return self.stack.pop()
+
+
+def get_movies_by_year(stack, year):
+    movies = []
+    temp_stack = MovieStack()
+
+    while not stack.is_empty():
+        movie = stack.pop()
+        if movie.release_year == year:
+            movies.append(movie.title)
+        temp_stack.push(movie)
+
+    while not temp_stack.is_empty():
+        stack.push(temp_stack.pop())
+
+    return movies
+
+
+def count_movies_by_year(stack, year):
+    count = 0
+    temp_stack = MovieStack()
+
+    while not stack.is_empty():
+        movie = stack.pop()
+        if movie.release_year == year:
+            count += 1
+        temp_stack.push(movie)
+
+    while not temp_stack.is_empty():
+        stack.push(temp_stack.pop())
+
+    return count
+
+
+def get_marvel_movies_by_year(stack, year):
+    movies = []
+    temp_stack = MovieStack()
+
+    while not stack.is_empty():
+        movie = stack.pop()
+        if movie.studio == 'Marvel Studios' and movie.release_year == year:
+            movies.append(movie.title)
+        temp_stack.push(movie)
+
+    while not temp_stack.is_empty():
+        stack.push(temp_stack.pop())
+
+    return movies
+
+
+# Example usage
+stack = MovieStack()
+stack.push(Movie("Avengers: Endgame", "Marvel Studios", 2019))
+stack.push(Movie("Black Panther", "Marvel Studios", 2018))
+stack.push(Movie("Captain America: Civil War", "Marvel Studios", 2016))
+stack.push(Movie("Iron Man 3", "Marvel Studios", 2013))
+stack.push(Movie("Frozen", "Disney", 2013))
+stack.push(Movie("Zootopia", "Disney", 2016))
+
+# a. Show movies released in the year 2014
+movies_2014 = get_movies_by_year(stack, 2014)
+print("Movies released in 2014:")
+for movie in movies_2014:
+    print(movie)
+print()
+
+# b. Indicate how many movies were released in the year 2018
+count_2018 = count_movies_by_year(stack, 2018)
+print(f"Number of movies released in 2018: {count_2018}")
+print()
+
+# c. Show Marvel Studios movies released in the year 2016
+marvel_movies_2016 = get_marvel_movies_by_year(stack, 2016)
+print("Marvel Studios movies released in 2016:")
+for movie in marvel_movies_2016:
+    print(movie)
