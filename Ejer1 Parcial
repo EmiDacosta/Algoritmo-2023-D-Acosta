@@ -1,0 +1,15 @@
+def contar_palabra(vector, palabra):
+    # Caso base: si el vector está vacío, retornar 0
+    if len(vector) == 0:
+        return 0
+    # Caso base: si la palabra es igual al primer elemento del vector,
+    # retornar 1 + la recursión con el resto del vector
+    if vector[0] == palabra:
+        return 1 + contar_palabra(vector[1:], palabra)
+    # Caso recursivo: retornar la recursión con el resto del vector
+    return contar_palabra(vector[1:], palabra)
+
+vector_palabras = ['magnesio', 'potasio', 'hierro', 'magnesio', 'fluor','oxigeno']
+palabra_buscada = 'magnesio'
+contador = contar_palabra(vector_palabras, palabra_buscada)
+print("La palabra '{}' aparece {} veces.".format(palabra_buscada, contador))
