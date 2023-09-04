@@ -1,0 +1,104 @@
+
+class Cancion:
+    def __init__(self, nombre, artista, año):
+        self.nombre = nombre
+        self.artista = artista
+        self.año = año
+
+
+lista_de_canciones = [
+    Cancion("Gasoline", "Audioslave", 2002),
+    Cancion("Smells like teen spirit", "Nirvana", 1991),
+    Cancion("Come are you as", "Nirvana", 1991),
+    Cancion("Be yourself", "Audioslave", 2005),
+    Cancion("Angie", "Rolling Stone", 1973),
+    Cancion("The man who sold the world", "Nirvana", 1993),
+]
+
+
+def listar_por_nombre(canciones):
+    return sorted(canciones, key=lambda x: x.nombre)
+
+
+def listar_por_artista(canciones):
+    return sorted(canciones, key=lambda x: x.artista)
+
+def listar_por_año(canciones):
+    return sorted(canciones, key=lambda x: x.año)
+
+
+def buscar_canciones_por_artista(canciones, artista):
+    return [c for c in canciones if c.artista == artista]
+
+
+def mostrar_canciones_por_artista(canciones, artista):
+    canciones_del_artista = buscar_canciones_por_artista(canciones, artista)
+    for cancion in canciones_del_artista:
+        print(f"{cancion.nombre} - {cancion.artista} ({cancion.año})")
+
+
+def agregar_cancion(canciones, nombre, artista, año):
+    nueva_cancion = Cancion(nombre, artista, año)
+    canciones.append(nueva_cancion)
+
+
+def contar_canciones_por_artista(canciones, artista):
+    return len([c for c in canciones if c.artista == artista])
+
+
+def mostrar_informacion_de_cancion(canciones, nombre_cancion):
+    for cancion in canciones:
+        if cancion.nombre == nombre_cancion:
+            print(f"Nombre: {cancion.nombre}")
+            print(f"Artista: {cancion.artista}")
+            print(f"Año de lanzamiento: {cancion.año}")
+            return
+
+
+print("Listado por nombre:")
+for cancion in listar_por_nombre(lista_de_canciones):
+    print(f"{cancion.nombre} - {cancion.artista} ({cancion.año})")
+print("=" * 40)
+
+print("Listado por artista:")
+for cancion in listar_por_artista(lista_de_canciones):
+    print(f"{cancion.nombre} - {cancion.artista} ({cancion.año})")
+print("=" * 40)
+
+print("Listado por año de lanzamiento:")
+for cancion in listar_por_año(lista_de_canciones):
+    print(f"{cancion.nombre} - {cancion.artista} ({cancion.año})")
+print("=" * 40)
+
+print("¿Existen canciones de Audioslave?")
+print(any(c.artista == "Audioslave" for c in lista_de_canciones))
+
+print("¿Existen canciones de Rolling Stone?")
+print(any(c.artista == "Rolling Stone" for c in lista_de_canciones))
+print("=" * 40)
+
+print("Canciones de Nirvana:")
+mostrar_canciones_por_artista(lista_de_canciones, "Nirvana")
+print("=" * 40)
+
+agregar_cancion(lista_de_canciones, "Nueva Cancion", "Nuevo Artista", 2023)
+
+print("Listado por nombre después de agregar una nueva canción:")
+for cancion in listar_por_nombre(lista_de_canciones):
+    print(f"{cancion.nombre} - {cancion.artista} ({cancion.año})")
+print("=" * 40)
+
+
+print("Cantidad de canciones de Red Hot Chili Peppers:")
+print(contar_canciones_por_artista(lista_de_canciones, "Red Hot Chili Peppers"))
+print("=" * 40)
+
+
+print("Información de la canción 'Fake tales of San Francisco':")
+mostrar_informacion_de_cancion(lista_de_canciones, "Fake tales of San Francisco")
+print("=" * 40)
+
+print("Información de la canción 'Black hole sun':")
+mostrar_informacion_de_cancion(lista_de_canciones, "Black hole sun")
+print("=" * 40)
+
