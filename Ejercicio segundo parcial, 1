@@ -1,0 +1,74 @@
+
+pokemons = [
+    {"nombre": "Bulbasaur", "numero": 1, "tipo": ["planta", "veneno"]},
+    {"nombre": "Charizard", "numero": 6, "tipo": ["fuego", "volador"]},
+    {"nombre": "Venusaur", "numero": 3, "tipo": ["planta", "veneno"]},
+    {"nombre": "Ivysaur", "numero": 2, "tipo": ["planta", "veneno"]},	
+    {"nombre": "Butterfree", "numero": 12, "tipo": ["bicho", "volador"]},
+    {"nombre": "Weedle", "numero": 13, "tipo": ["bicho", "veneno"]},
+    {"nombre": "Pidgey", "numero": 16, "tipo": ["normal", "volador"]},
+    {"nombre": "Pidgeot", "numero": 18, "tipo": ["normal", "volador"]},
+    {"nombre": "Nidoqueen", "numero": 31, "tipo": ["veneno", "tierra"]},
+    {"nombre": "Zubat", "numero": 41, "tipo": ["veneno", "volador"]},
+    {"nombre": "Gloom", "numero": 44, "tipo": ["planta", "veneno"]},
+    {"nombre": "Venonat", "numero": 48, "tipo": ["bicho", "veneno"]},
+]
+
+
+pokemon_by_name = {pokemon["nombre"]: pokemon for pokemon in pokemons}
+pokemon_by_number = {pokemon["numero"]: pokemon for pokemon in pokemons}
+pokemon_by_type = {}
+for pokemon in pokemons:
+    for p_type in pokemon["tipo"]:
+        if p_type not in pokemon_by_type:
+            pokemon_by_type[p_type] = []
+        pokemon_by_type[p_type].append(pokemon)
+
+
+def buscar_pokemon_por_numero(numero):
+    if numero in pokemon_by_number:
+        return pokemon_by_number[numero]
+    return None
+
+def buscar_pokemon_por_nombre(parte_nombre):
+    resultado = []
+    for nombre, pokemon in pokemon_by_name.items():
+        if parte_nombre.lower() in nombre.lower():
+            resultado.append(pokemon)
+    return resultado
+
+
+def nombres_por_tipo(tipo):
+    if tipo in pokemon_by_type:
+        return [pokemon["nombre"] for pokemon in pokemon_by_type[tipo]]
+    return []
+
+
+pokemon_por_numero_ordenado = sorted(pokemons, key=lambda x: x["numero"])
+pokemon_por_nombre_ordenado = sorted(pokemons, key=lambda x: x["nombre"])
+
+
+def mostrar_pokemon(nombre):
+    if nombre in ["Jolteon", "Lycanroc", "Tyrantrum"]:
+        return pokemon_by_name[nombre]
+    return None
+
+
+def contar_tipo(tipo):
+    count = 0
+    for pokemon in pokemons:
+        if tipo in pokemon["tipo"]:
+            count += 1
+    return count
+
+tipo_electrico = "eléctrico"
+tipo_acero = "acero"
+
+count_electrico = contar_tipo(tipo_electrico)
+count_acero = contar_tipo(tipo_acero)
+
+print("Pokémon de tipo eléctrico:", count_electrico)
+print("Pokémon de tipo acero:", count_acero)
+
+
+
