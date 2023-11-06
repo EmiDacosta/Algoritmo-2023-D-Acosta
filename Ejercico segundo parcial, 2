@@ -1,0 +1,51 @@
+
+import networkx as nx
+
+
+G = nx.Graph()
+
+
+personajes = ["Luke Skywalker", "Darth Vader", "Yoda", "Boba Fett", "C-3PO", "Leia", "Rey", "Kylo Ren", "Chewbacca", "Han Solo", "R2-D2", "BB-8"]
+
+
+G.add_nodes_from(personajes)
+
+
+relaciones = [
+    ("Luke Skywalker", "Darth Vader", 5),
+    ("Luke Skywalker", "Leia", 3),
+    ("Darth Vader", "Yoda", 2),
+    ("Boba Fett", "C-3PO", 1),
+    ("Rey", "Kylo Ren", 4),
+    ("Chewbacca", "Han Solo", 5),
+    ("R2-D2", "BB-8", 2),
+    # Agregar más relaciones aquí
+]
+
+for personaje1, personaje2, episodios in relaciones:
+    G.add_edge(personaje1, personaje2, weight=episodios)
+
+
+minimum_spanning_tree = nx.minimum_spanning_tree(G)
+
+
+yoda_in_minimum_spanning_tree = "Yoda" in minimum_spanning_tree.nodes()
+
+
+max_shared_episodes = 0
+characters_with_max_shared_episodes = []
+
+for u, v, data in G.edges(data=True):
+    if data["weight"] > max_shared_episodes:
+        max_shared_episodes = data["weight"]
+        characters_with_max_shared_episodes = [u, v]
+    elif data["weight"] == max_shared_episodes:
+        characters_with_max_shared_episodes.append(u)
+        characters_with_max_shared_episodes.append(v)
+
+
+print("Árbol de expansión mínimo:", minimum_spanning_tree.edges())
+print("¿Yoda está en el árbol de expansión mínimo?", yoda_in_minimum_spanning_tree)
+print("Número máximo de episodios compartidos:", max_shared_episodes)
+print("Personajes con el número máximo de episodios compartidos:", characters_with_max_shared_episodes)
+
